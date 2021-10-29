@@ -40,7 +40,8 @@ SELECT DISTINCT teachers.name, teachers.surname FROM `teachers` JOIN course_teac
 7. BONUS: Selezionare per ogni studente quanti tentativi d’esame ha sostenuto per
 superare ciascuno dei suoi esami
 
-SELECT students.id, students.surname, students.name, courses.name AS "course", MAX(exam_student.vote) AS "max_vote" FROM `students` JOIN exam_student ON exam_student.student_id = students.id JOIN exams ON exam_student.exam_id = exams.id JOIN courses ON exams.course_id = courses.id GROUP BY students.id, courses.id ORDER BY students.surname ASC, students.name ASC, courses.name;  
+SELECT students.id, students.surname, students.name, courses.name AS "course", MAX(exam_student.vote) AS "max_vote" FROM `students` JOIN exam_student ON exam_student.student_id = students.id JOIN exams ON exam_student.exam_id = exams.id JOIN courses ON exams.course_id = courses.id GROUP BY students.id, courses.id ORDER BY students.surname ASC, students.name ASC, courses.name HAVING max_vote > 18;  
+
 
 ===
 
