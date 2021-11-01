@@ -2,7 +2,7 @@
 require_once "config.php";
 header("Content-Type: application/json");
 
-$param = "date";
+$param = "cfu";
 $obj = ["status" => 200];
 
 if (!isset($_GET[$param]) || trim($_GET[$param] === "" || !is_numeric($_GET[$param]))) die(json_encode(
@@ -16,11 +16,11 @@ $mysqli = new mysqli($host, $user, $password, $database);
 if ($mysqli->connect_error) die($mysqli->connect_error);
 
 // Prepare Query and Bind
-$qry = "SELECT * FROM students WHERE date_of_birth LIKE ?;";
+$qry = "SELECT * FROM `courses` WHERE cfu > ?;";
 $stmt = $mysqli->prepare($qry);
-$stmt->bind_param("s", $date);
+$stmt->bind_param("i", $cfu);
 
-$date = $_GET[$param] . "-%";
+$cfu = $_GET[$param];
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -36,6 +36,3 @@ echo json_encode($obj);
 
 $stmt->close();
 $mysqli->close();
-
-
-// var_dump($mysqli);
